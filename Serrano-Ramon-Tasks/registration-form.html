@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+
+<body>
+    <header></header>
+    <nav>
+        <h2>Mighty Ducks Hockey League</h2>
+        <a class="button btn-green" href="./index.html">Home</a>
+        <a class="button btn-blue" href="./about.html">About</a>
+        <a class="button btn-blue" href="#">Registration</a>
+        <a class="button btn-blue" href="./schedule.html">Games Schedule</a>
+        <a class="button btn-blue" href="./rules.html">Game Rules</a>
+        <a class="button btn-blue" href="./contact.html">Contact</a>
+    </nav>
+    <main>
+
+        <form action="./show_data.html" method="post">
+
+            <fieldset>
+                <legend class="center">
+                    <h1>Registration Form</h1>
+                </legend>
+                <div class="form-row">
+                    <label for="first-name">Player's First Name:</label>
+                    <input type="text" style="width: 200px;" id="first-name" name="first-name" required>
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" style="width: 200px;" id="last-name" name="last-name" required>
+                </div>
+                <div class="form-row">
+                    <label for="street-address">Street Address:</label>
+                    <input type="text" style="width: 555px;" id="street-address" name="street-address" required>
+                </div>
+                <div class="form-row">
+                    <label for="city">City:</label>
+                    <input type="text" style="width: 200px;" id="city" name="city" required>
+                    <label for="zip-code">Zip Code:</label>
+                    <input type="text" style="width: 80px;" id="zip-code" name="zip-code" required>
+                </div>
+                <div class="form-row">
+                    <label for="birth-date">Birth Date(mm/dd/yyyy):</label>
+                    <input type="date" id="birth-date" name="birth-date" required>
+                    <label>Gender:</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                </div>
+                <div class="form-row">
+                    <label>Grade:</label>
+                    <input type="radio" id="preschool" name="grade" value="preschool">
+                    <label for="preschool">Pre-School</label>
+                    <input type="radio" id="1st" name="grade" value="1st">
+                    <label for="1st">1st</label>
+                    <input type="radio" id="2nd" name="grade" value="2nd">
+                    <label for="2nd">2nd</label>
+                    <input type="radio" id="3rd" name="grade" value="3rd">
+                    <label for="3rd">3rd</label>
+                    <input type="radio" id="4th" name="grade" value="4th">
+                    <label for="4th">4th</label>
+                    <input type="radio" id="5th" name="grade" value="5th">
+                    <label for="5th">5th</label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Which elementary school do you live near?</legend><label for="closest-school"><b>Closest
+                        School:</b></label>
+                <div class="container-row">
+                    <div class="two-columns">
+
+                        <label>
+                            <input type="checkbox" id="closest-school" name="closest-school[]" value="Marjorie P Hart">
+                            Marjorie P Hart
+                        </label>
+                        <label>
+                            <input type="checkbox" id="closest-school2" name="closest-school[]"
+                                value="North Elementary">
+                            North Elementary
+                        </label>
+                        <label>
+                            <input type="checkbox" id="closest-school3" name="closest-school[]"
+                                value="South Elementary">
+                            South Elementary
+                        </label>
+                    </div>
+                    <div class="two-columns">
+                        <label>
+                            <input type="checkbox" id="closest-school4" name="closest-school[]" value="Marjorie P Hart">
+                            Marjorie P Hart
+                        </label>
+                        <label>
+                            <input type="checkbox" id="closest-school5" name="closest-school[]"
+                                value="North Elementary">
+                            North Elementary
+                        </label>
+                        <label>
+                            <input type="checkbox" id="closest-school6" name="closest-school[]"
+                                value="South Elementary">
+                            South Elementary
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>What position(s) do you normally play? (check all that apply)</legend>
+                <div class="container-row">
+                    <div class="two-columns">
+                        <label for="forward"><input type="checkbox" id="forward" name="positions-played[]"
+                                value="forward">
+                            Forward</label>
+                        <label for="defense"><input type="checkbox" id="defense" name="positions-played[]"
+                                value="defense">
+                            Defense</label>
+                    </div>
+                    <div class="two-columns">
+                        <label for="midfield"><input type="checkbox" id="midfield" name="positions-played[]"
+                                value="midfield">
+                            Midfield</label>
+                        <label for="goalkeeper"><input type="checkbox" id="goalkeeper" name="positions-played[]"
+                                value="goalkeeper">
+                            Goalkeeper</label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Uniform Size:</legend>
+                <div class="container-row">
+                    <div class="two-columns">
+                        <label for="youth-small"><input type="radio" id="youth-small" name="uniform-size"
+                                value="youth-small">
+                            Youth Small</label>
+                        <label for="youth-medium"><input type="radio" id="youth-medium" name="uniform-size"
+                                value="youth-medium">
+                            Youth Medium</label>
+                        <label for="youth-large"><input type="radio" id="youth-large" name="uniform-size"
+                                value="youth-large">
+                            Youth Large</label>
+                        <label for="small"><input type="radio" id="small" name="uniform-size" value="small">
+                            Small</label>
+                    </div>
+                    <div class="two-columns">
+
+                        <label for="medium"><input type="radio" id="medium" name="uniform-size" value="medium">
+                            Medium</label>
+                        <label for="large"><input type="radio" id="large" name="uniform-size" value="large">
+                            Large</label>
+                        <label for="extra-large"><input type="radio" id="extra-large" name="uniform-size"
+                                value="extra-large">
+                            Extra-Large</label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Permission to Play:</legend>
+                <p class="justify sin-sangria">I, the parent or guardian of the minor registrant, agree that the
+                    registrant and I
+                    will abide by all the rules of the Mighty Ducks Hockey League (MDHL). In recognizing the possibility
+                    of physical injury associated with hockey and in consideration for the “League" accepting the
+                    registrant for its hockey programs and activities, I hereby release, discharge, and/or otherwise
+                    indemnify MDHL, their employees and associated personnel and volunteers, including the facilities
+                    used for practices and games, against any claim by or on behalf of the registrant as a result of the
+                    registrant's participation in the program and/or being transported to or from MDHL sponsored
+                    activities, which transportation</p>
+                <p class="justify sin-sangria">By signing below, I hereby agree andauthorize the above. In addition, by
+                    signing below, I also acknowledge that I have
+                    read the cancellation policy and agree to its terms.</p>
+            </fieldset>
+            <fieldset>
+                <label>Cancellation Policy:</label>
+                <p class="justify">I acknowledge that I have read the cancellation policy and agree to its terms.</p>
+                <input type="checkbox" id="permission-to-play-checkbox" name="permission-to-play-checkbox" required>
+                <label for="permission-to-play-checkbox">I Agree</label>
+
+                <label for="parent-signature">Parent/Guardian Signature:</label>
+                <input type="text" id="parent-signature" name="parent-signature" required>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+                <input type="submit" value="Enviar" style="width: 200px; height: 50px; justify-content: center;">
+            </fieldset>
+
+        </form>
+    </main>
+</body>
+
+</html>

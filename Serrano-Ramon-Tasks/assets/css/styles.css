@@ -1,0 +1,307 @@
+* {
+    margin: 0;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    padding: 2rem;
+    position: relative;
+    min-height: 100vh;
+    min-width: 70vw;
+    background-color: bisque;
+    display: flex;
+    /* justify-content: center;
+    align-items: center;  */
+}
+
+.capitalize {
+    text-transform: uppercase
+}
+
+a {
+    text-decoration-line: none;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+p {
+    text-align: left;
+}
+
+.con-sangria {
+    text-indent: 1.5em;
+}
+
+.sin-sangria {
+    text-indent: 0;
+}
+
+ul {
+    text-indent: 0;
+}
+
+.lst-none {
+    list-style-type: none;
+}
+
+.lst-circle {
+    list-style-type: circle;
+}
+
+.margin-20 {
+    margin-left: 40px;
+}
+
+ol {
+    text-indent: 0;
+}
+
+h1 {
+    text-align: center;
+    display: inline-block;
+    font-size: 1.5rem;
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+img {
+    margin-right: 15px;
+    float: left;
+    position: relative;
+}
+
+/* div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+table {
+    min-height: 40vh;
+    border: none solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: start;
+    table-layout: auto;
+    margin: auto;
+    width: 100%;
+    table-layout: auto;
+}
+
+.center {
+    text-align: center;
+}
+
+th,
+td {
+    border: none solid black;
+    text-align: justify;
+}
+
+.columna1 {
+    text-align: flex;
+}
+
+.fila1 {
+    background-color: cadetblue;
+}
+
+.otrascolumnas {
+    background-color: cadetblue;
+}
+
+.justify {
+    text-align: justify;
+}
+
+
+header {
+    background-color: white;
+    min-height: 45vh;
+    min-width: 45vw;
+    padding: 1.5rem;
+    background-image: url(../img/design1_image2.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+
+.logo {
+    min-width: 33%;
+    position: relative;
+    float: left;
+    height: 300px;
+}
+
+nav {
+
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.btn-green {
+    background-color: green;
+}
+
+.btn-blue {
+    background-color: blue;
+}
+
+
+.button {
+    top: 0%;
+    color: #fff;
+    border: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 0px;
+    box-shadow: 0px 0px 2px 2px rgb(0, 0, 0);
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    flex-grow: 0.5;
+    max-width: 200px;
+}
+
+@media screen and (min-width: 768px) {
+    .button {
+
+        padding: 0.6rem 1.2rem;
+        font-size: 1.0rem;
+        flex-basis: auto;
+        max-width: none;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: column; */
+    /* o row, dependiendo de la orientación que desees */
+    align-items: left;
+    /* para centrar los elementos horizontalmente */
+    justify-content: flex-start;
+    /* para centrar los elementos verticalmente */
+    width: 100%;
+    /* para que ocupe todo el ancho disponible */
+    height: 100%;
+    /* para que ocupe todo el alto disponible */
+
+}
+
+.container {
+    display:flex;
+    flex-direction: column;
+    max-width: 1200px;
+    /* ancho máximo del contenedor */
+    margin: 0 auto;
+    /* centrar el contenedor horizontalmente */
+    padding: 0px 20px;
+    /* agregar un relleno interno a los lados del contenedor */
+    /* background-color: aquamarine; */
+
+
+}
+
+caption {
+    text-align: start;
+}
+
+.cursiva {
+    font-style: italic;
+    display: inline-flex;
+}
+
+
+.negrita {
+    display: inline-flex;
+    width: auto;
+    text-align: left;
+    font-weight: bold;
+
+}
+
+.normal {
+    display: flex;
+    width: auto;
+
+}
+
+#logo-pagina {
+    min-height: 100%;
+
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.div-row {
+    flex-direction: row;
+
+}
+
+input[type="radio"] {
+    -webkit-appearance: checkbox;
+    /* Safari, Chrome, Edge, Opera */
+    -moz-appearance: checkbox;
+    /* Firefox */
+    -ms-appearance: checkbox;
+    /* Internet Explorer/Edge Legacy */
+    appearance: checkbox;
+}
+
+
+fieldset input {
+    margin-bottom: 10px;
+}
+
+fieldset {
+    border: none;
+    display: block;
+    margin: 2rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    align-items: flex-start;
+}
+
+
+legend {
+    font-weight: bold;
+}
+
+
+.two-columns {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+
+}
+
+.container-row {
+    display: flex;
+    flex-direction: row;
+
+}
