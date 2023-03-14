@@ -1,31 +1,5 @@
-function mostrarDetalle(boton) {
-    // Obtenemos la tarjeta que contiene el botón
-    var tarjeta = boton.closest('.card');
-
-    // Obtenemos los datos que necesitamos de la tarjeta
-    var imagenUrl = tarjeta.querySelector('img').src;
-    var titulo = tarjeta.querySelector('.card-title').textContent;
-    var subtitulo = tarjeta.querySelector('.card-subtitle').textContent;
-    var descripcion = tarjeta.querySelector('.card-text').textContent;
-    var place = tarjeta.querySelector('#place-text').textContent;
-    var date = tarjeta.querySelector('#date-text').textContent;
-    var precio = tarjeta.querySelector('.text-muted').textContent;
-    // Guardamos los datos en localStorage para poder acceder a ellos desde la página detail.html
-    localStorage.setItem('imagenUrl', imagenUrl);
-    localStorage.setItem('titulo', titulo);
-    localStorage.setItem('subtitulo', subtitulo);
-    localStorage.setItem('descripcion', descripcion);
-    localStorage.setItem('place', place);
-    localStorage.setItem('date', date);
-    localStorage.setItem('precio', precio);
-    // Redireccionamos a la página detail.html
-    setTimeout(function () {
-        window.location.href = './detail.html';
-    }, 100); // se asigna un tiempo de esperar para que se cargue la info en detail.html y rebderizarla.
-};
-
-// contruimos una funcion para enviar al DOM el template string de la card tipo y llenarla con los 
-// datos del array a través del id "containerId". Verificando que el id "containerId" esté presente en el html y sino genere un error.  
+// contruimos una funcion para enviar al DOM el template string de la card tipo y llenarla con los
+// datos del array a través del id "containerId". Verificando que el id "containerId" esté presente en el html y sino genere un error.
 
 function send_template_to_dom(array, containerId) {
     // Inicializamos el DOM
@@ -47,8 +21,8 @@ function send_template_to_dom(array, containerId) {
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <small class="text-muted align-self-center fw-bold">Price: $${item.price}</small>
-                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-secondary shadow btn-ver-mas"
-                        onclick="mostrarDetalle(this)" data-id="${item._id}">See more</a>
+                    <a href="./detail.html?id=${item._id}" class="btn btn-sm btn-outline-secondary shadow btn-ver-mas"
+                        data-id="${item._id}">See more</a>
                 </div>
             </div>
         </div>
@@ -57,8 +31,11 @@ function send_template_to_dom(array, containerId) {
     html.innerHTML = template;
 };
 
-// Construimos una funcion para enviar la seccion de checkbox de categorias y search input al DOM automaticamente, 
-// colocandole los nombres de las categorias existentes en el array filtrado creado arriba. 
+
+
+
+// Construimos una funcion para enviar la seccion de checkbox de categorias y search input al DOM automaticamente,
+// colocandole los nombres de las categorias existentes en el array filtrado creado arriba.
 
 function createCategories(categories) {
     const categoryContainer = document.querySelector('#categoryContainer');
@@ -130,9 +107,9 @@ function searchEvents(array) {
         const filteredEvents = array.filter(event => {
             const containsSearchText =
                 (event.name && event.name.toLowerCase().includes(searchText)) || // genera y convierte los criterios de busqueda a lowercase para hacerlo insensitivos a mayusc y minusc
-                (event.place && event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place 
+                (event.place && event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place
                 (event.description && event.description.toLowerCase().includes(searchText)) || // criterio de busqueda por description
-                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price      
+                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price
             const matchesCategory = selectedCategories.includes(event.category);
             return containsSearchText && matchesCategory;
         });;
@@ -141,9 +118,9 @@ function searchEvents(array) {
         const filteredEvents = array.filter(event => {
             const containsSearchText =
                 (event.name && event.name.toLowerCase().includes(searchText)) || // genera y convierte los criterios de busqueda a lowercase para hacerlo insensitivos a mayusc y minusc
-                (event.place && event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place 
+                (event.place && event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place
                 (event.description && event.description.toLowerCase().includes(searchText)) || // criterio de busqueda por description
-                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price   
+                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price
             const matchesCategory = selectedCategories.includes(event.category);
             return containsSearchText && matchesCategory;
         });
