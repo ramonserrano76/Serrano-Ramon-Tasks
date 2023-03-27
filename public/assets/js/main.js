@@ -203,105 +203,47 @@ function createCategories(categories, events) {
 }
 
 
-// Por último creamos una funcion para la funcionalidad la busqueda con filtrado de categorias y texto de busqueda
-// con criterios de búsqueda por name, place, description y price. Se reutilizan funciones ya creadas anteriormente.
-
 function searchEvents(array) {
     event.preventDefault();
     const searchText = document.querySelector('#searchText').value;
     const categories = Array.from(document.querySelectorAll('input[type="checkbox"]'));
     const selectedCategories = categories.filter(category => category.checked).map(category => category.value);
 
-    if (selectedCategories.length === 0) { // // si no hay categorías seleccionadas, mostrar todos los eventos, filtrar eventos por todas las categorias que existan y por texto de búsqueda
+    if (selectedCategories.length === 0) { // si no hay categorías seleccionadas, mostrar todos los eventos, filtrar eventos por todas las categorias que existan y por texto de búsqueda
         // agregar todas las categorias al arreglo selectedCategories
         categories.forEach(category => selectedCategories.push(category.value));
-        const filteredEvents = array.filter(event => {
-            const containsSearchText =
-                (event.name.includes(searchText)) ||
-                (event.name.toLowerCase().includes(searchText)) || // genera y convierte los criterios de busqueda a lowercase para hacerlo insensitivos a mayusc y minusc
-                (event.name.toUpperCase().includes(searchText)) ||
-                (event.place.includes(searchText)) ||
-                (event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place
-                (event.place.toUpperCase().includes(searchText)) ||
-                (event.description.includes(searchText)) ||
-                (event.description.toLowerCase().includes(searchText)) || // criterio de busqueda por description
-                (event.description.toUpperCase().includes(searchText)) ||
-                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price
-            const matchesCategory = selectedCategories.includes(event.category);
-            return containsSearchText && matchesCategory;
-        });;
-        send_template_to_dom(filteredEvents, "containerId");
-    } else { // filtrar eventos por categoría y texto de búsqueda
-        const filteredEvents = array.filter(event => {
-            const containsSearchText =
-                (event.name.includes(searchText)) ||
-                (event.name.toLowerCase().includes(searchText)) || // genera y convierte los criterios de busqueda a lowercase para hacerlo insensitivos a mayusc y minusc
-                (event.name.toUpperCase().includes(searchText)) ||
-                (event.place.includes(searchText)) ||
-                (event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place
-                (event.place.toUpperCase().includes(searchText)) ||
-                (event.description.includes(searchText)) ||
-                (event.description.toLowerCase().includes(searchText)) || // criterio de busqueda por description
-                (event.description.toUpperCase().includes(searchText)) ||
-                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price
-            const matchesCategory = selectedCategories.includes(event.category);
-            return containsSearchText && matchesCategory;
-        });
+    }
 
+    const filteredEvents = array.filter(event => {
+        const containsSearchText =
+            (event.name && (event.name.includes(searchText) ||
+                event.name.toLowerCase().includes(searchText) ||
+                event.name.toUpperCase().includes(searchText))) ||
+            (event.place && (event.place.includes(searchText) ||
+                event.place.toLowerCase().includes(searchText) ||
+                event.place.toUpperCase().includes(searchText))) ||
+            (event.description && (event.description.includes(searchText) ||
+                event.description.toLowerCase().includes(searchText) ||
+                event.description.toUpperCase().includes(searchText))) ||
+            (event.price && event.price.toString().includes(searchText));
+        const matchesCategory = selectedCategories.includes(event.category);
+        return containsSearchText && matchesCategory;
+    });
+
+    const container = document.querySelector("#containerId");
+    container.innerHTML = "";
+
+    if (filteredEvents.length === 0) {
+        const message = document.createElement("p");
+        message.classList.add("text-center", "alert", "alert-danger", "mt-5");
+        message.setAttribute("role", "alert")
+        message.textContent = "¡Oops! Nothing found here!";
+        container.appendChild(message);
+    } else {
         send_template_to_dom(filteredEvents, "containerId");
     }
-};
+}
 
-// function updateTable(array, row) {
-//     // Verificar si el array de eventos tiene la propiedad 'assistance'
-//     const hasAssistanceProperty = array.some(event => event.hasOwnProperty('assistance'));
-
-//     // Si el array no tiene la propiedad 'assistance', renombrar la propiedad 'estimate' a 'assistance' en cada evento
-//     if (!hasAssistanceProperty) {
-//         array.forEach(event => {
-//             if (event.hasOwnProperty('estimate')) {
-//                 event.assistance = event.estimate;
-//                 delete event.estimate;
-//             }
-//         });
-//     }
-
-//     // Obtener los ingresos totales y la asistencia por categoría
-//     const revenueAndAttendanceByCategory = array.reduce((result, event) => {
-
-//         const { category, assistance, capacity, price, revenue = (assistance * price) } = event;
-
-//         // Inicializar el objeto de la categoría si aún no existe
-//         if (!result[category]) {
-
-//             result[category] = { assistance: 0, capacity: 0, revenue: 0, };
-//             const revenue = (result[category].assistance * result[category].price);
-//         }
-
-//         // Agregar los ingresos y la asistencia del evento a la categoría correspondiente
-//         result[category].assistance += assistance;
-//         result[category].capacity += capacity;
-//         result[category].revenue += revenue;
-
-//         console.log(result)
-//         return result;
-
-//     }, {});
-//     const categories = Object.keys(revenueAndAttendanceByCategory);
-//     console.log(categories);
-//     for (let i = row; i < row + categories.length; i++) {
-//         const categoryEvent = document.querySelector(`table tr:nth-child(${i}) td:nth-child(1)`);
-//         const revenueByCategory = document.querySelector(`table tr:nth-child(${i}) td:nth-child(2)`);
-//         const attendancePercentageByCategory = document.querySelector(`table tr:nth-child(${i}) td:nth-child(3)`);
-//         const categoryItem = categories[i - row];
-//         const categoryData = revenueAndAttendanceByCategory[categoryItem];
-//         const revenue = categoryData.revenue;
-//         const attendancePercentage = (categoryData.assistance / categoryData.capacity * 100).toFixed(2);
-//         categoryEvent.textContent = categoryItem;
-//         revenueByCategory.textContent = `$${revenue.toFixed(0)}`;
-//         attendancePercentageByCategory.textContent = `${attendancePercentage}%`;
-//     }
-// };
 
 function updateTable(array, row) {
     // Verificar si el array de eventos tiene la propiedad 'assistance'
