@@ -79,36 +79,105 @@ function send_template_to_dom(array, containerId) {
 // Construimos una funcion para enviar la seccion de checkbox de categorias y search input al DOM automaticamente,
 // colocandole los nombres de las categorias existentes en el array filtrado creado arriba.
 
-function createCategories(categories) {
+// function createCategories(categories) {
+//     const categoryContainer = document.querySelector('#categoryContainer');
+//     const categoryMap = {};
+
+//     categories.forEach((categories) => {
+//         if (!categoryMap[categories.category]) { // verificar si la categoría ya existe para que no se repitan
+//             const categoryLabel = document.createElement('label');
+//             categoryLabel.classList.add('form-check-label');
+//             categoryLabel.setAttribute('for', categories._id);
+//             categoryLabel.textContent = categories.category;
+
+//             const categoryInput = document.createElement('input');
+//             categoryInput.classList.add('form-check-input');
+//             categoryInput.setAttribute('type', 'checkbox');
+//             categoryInput.setAttribute('value', categories.category);
+//             categoryInput.setAttribute('id', categories._id);
+//             categoryInput.setAttribute('name', categories.category);
+//             const categoryDiv = document.createElement('div');
+//             categoryDiv.classList.add('form-check', 'me-3');
+//             categoryDiv.setAttribute('id', 'checkboxId');
+//             categoryDiv.appendChild(categoryInput);
+//             categoryDiv.appendChild(categoryLabel);
+
+//             categoryContainer.appendChild(categoryDiv);
+
+//             categoryMap[categories.category] = true; // agregar la categoría al mapa
+//         }
+//     });
+//     // Agregar el formulario de búsqueda después del ciclo forEach
+//     const searchForm = document.createElement('form');
+//     searchForm.classList.add('d-flex', 'me-3');
+//     searchForm.setAttribute('id', 'checkboxId');
+//     const searchInput = document.createElement('input');
+//     searchInput.classList.add('form-control', 'me-2');
+//     searchInput.setAttribute('type', 'search');
+//     searchInput.setAttribute('placeholder', 'Search');
+//     searchInput.setAttribute('aria-label', 'Search');
+//     searchInput.setAttribute('id', 'searchText');
+
+//     const searchButton = document.createElement('button');
+//     searchButton.classList.add('btn', 'btn-outline-dark');
+//     searchButton.setAttribute('type', 'submit');
+//     searchButton.setAttribute('id', 'searchButton');
+
+//     const searchIcon = document.createElement('i');
+//     searchIcon.classList.add('bi', 'bi-search');
+
+//     searchButton.appendChild(searchIcon);
+
+//     searchForm.appendChild(searchInput);
+//     searchForm.appendChild(searchButton);
+
+//     categoryContainer.appendChild(searchForm);
+// };
+
+function createCategories(categories, events) {
     const categoryContainer = document.querySelector('#categoryContainer');
     const categoryMap = {};
 
-    categories.forEach((categories) => {
-        if (!categoryMap[categories.category]) { // verificar si la categoría ya existe para que no se repitan
+    categories.forEach((category) => {
+        if (!categoryMap[category.category]) {
             const categoryLabel = document.createElement('label');
             categoryLabel.classList.add('form-check-label');
-            categoryLabel.setAttribute('for', categories.id);
-            categoryLabel.textContent = categories.category;
+            categoryLabel.setAttribute('for', category._id);
+            categoryLabel.textContent = category.category;
 
             const categoryInput = document.createElement('input');
-            categoryInput.classList.add('form-check-input', 'form-check-input-dark');
+            categoryInput.classList.add('form-check-input');
             categoryInput.setAttribute('type', 'checkbox');
-            categoryInput.setAttribute('value', categories.category);
-            categoryInput.setAttribute('id', categories.id);
+            categoryInput.setAttribute('value', category.category);
+            categoryInput.setAttribute('id', category._id);
+            categoryInput.setAttribute('name', category.category);
 
             const categoryDiv = document.createElement('div');
             categoryDiv.classList.add('form-check', 'me-3');
+            categoryDiv.setAttribute('id', 'checkboxId');
+
             categoryDiv.appendChild(categoryInput);
             categoryDiv.appendChild(categoryLabel);
 
             categoryContainer.appendChild(categoryDiv);
 
-            categoryMap[categories.category] = true; // agregar la categoría al mapa
+            // agregar el manejador de eventos al checkbox
+            categoryInput.addEventListener('change', () => {
+                const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(category => category.value);
+
+                const filteredEvents = events.filter(event => selectedCategories.includes(event.category));
+
+                send_template_to_dom(filteredEvents, "containerId");
+            });
+
+            categoryMap[category.category] = true;
         }
     });
-    // Agregar el formulario de búsqueda después del ciclo forEach
+
+    // agregar el formulario de búsqueda
     const searchForm = document.createElement('form');
     searchForm.classList.add('d-flex', 'me-3');
+    searchForm.setAttribute('id', 'checkboxId');
 
     const searchInput = document.createElement('input');
     searchInput.classList.add('form-control', 'me-2');
@@ -118,12 +187,12 @@ function createCategories(categories) {
     searchInput.setAttribute('id', 'searchText');
 
     const searchButton = document.createElement('button');
-    searchButton.classList.add('btn', 'btn-outline-dark');
+    searchButton.classList.add('btn', 'btn-outline-dark', 'disabled');
     searchButton.setAttribute('type', 'submit');
     searchButton.setAttribute('id', 'searchButton');
 
     const searchIcon = document.createElement('i');
-    searchIcon.classList.add('bi', 'bi-search');
+    searchIcon.classList.add('bi', 'bi-xbox');
 
     searchButton.appendChild(searchIcon);
 
@@ -131,11 +200,8 @@ function createCategories(categories) {
     searchForm.appendChild(searchButton);
 
     categoryContainer.appendChild(searchForm);
-};
+}
 
-
-// Por último creamos una funcion para la funcionalidad la busqueda con filtrado de categorias y texto de busqueda
-// con criterios de búsqueda por name, place, description y price. Se reutilizan funciones ya creadas anteriormente.
 
 function searchEvents(array) {
     event.preventDefault();
@@ -143,33 +209,40 @@ function searchEvents(array) {
     const categories = Array.from(document.querySelectorAll('input[type="checkbox"]'));
     const selectedCategories = categories.filter(category => category.checked).map(category => category.value);
 
-    if (selectedCategories.length === 0) { // // si no hay categorías seleccionadas, mostrar todos los eventos, filtrar eventos por todas las categorias que existan y por texto de búsqueda
+    if (selectedCategories.length === 0) { // si no hay categorías seleccionadas, mostrar todos los eventos, filtrar eventos por todas las categorias que existan y por texto de búsqueda
         // agregar todas las categorias al arreglo selectedCategories
         categories.forEach(category => selectedCategories.push(category.value));
-        const filteredEvents = array.filter(event => {
-            const containsSearchText =
-                (event.name && event.name.toLowerCase().includes(searchText)) || // genera y convierte los criterios de busqueda a lowercase para hacerlo insensitivos a mayusc y minusc
-                (event.place && event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place
-                (event.description && event.description.toLowerCase().includes(searchText)) || // criterio de busqueda por description
-                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price
-            const matchesCategory = selectedCategories.includes(event.category);
-            return containsSearchText && matchesCategory;
-        });;
-        send_template_to_dom(filteredEvents, "containerId");
-    } else { // filtrar eventos por categoría y texto de búsqueda
-        const filteredEvents = array.filter(event => {
-            const containsSearchText =
-                (event.name && event.name.toLowerCase().includes(searchText)) || // genera y convierte los criterios de busqueda a lowercase para hacerlo insensitivos a mayusc y minusc
-                (event.place && event.place.toLowerCase().includes(searchText)) || // criterio de busqueda por place
-                (event.description && event.description.toLowerCase().includes(searchText)) || // criterio de busqueda por description
-                (event.price && event.price.toString().includes(searchText)); // criterio de busqueda por price
-            const matchesCategory = selectedCategories.includes(event.category);
-            return containsSearchText && matchesCategory;
-        });
+    }
 
+    const filteredEvents = array.filter(event => {
+        const containsSearchText =
+            (event.name && (event.name.includes(searchText) ||
+                event.name.toLowerCase().includes(searchText) ||
+                event.name.toUpperCase().includes(searchText))) ||
+            (event.place && (event.place.includes(searchText) ||
+                event.place.toLowerCase().includes(searchText) ||
+                event.place.toUpperCase().includes(searchText))) ||
+            (event.description && (event.description.includes(searchText) ||
+                event.description.toLowerCase().includes(searchText) ||
+                event.description.toUpperCase().includes(searchText))) ||
+            (event.price && event.price.toString().includes(searchText));
+        const matchesCategory = selectedCategories.includes(event.category);
+        return containsSearchText && matchesCategory;
+    });
+
+    const container = document.querySelector("#containerId");
+    container.innerHTML = "";
+
+    if (filteredEvents.length === 0) {
+        const message = document.createElement("p");
+        message.classList.add("text-center", "alert", "alert-danger", "mt-5");
+        message.setAttribute("role", "alert")
+        message.textContent = "¡Oops! Nothing found here!";
+        container.appendChild(message);
+    } else {
         send_template_to_dom(filteredEvents, "containerId");
     }
-};
+}
 
 
 function updateTable(array, row) {
@@ -189,13 +262,11 @@ function updateTable(array, row) {
     // Obtener los ingresos totales y la asistencia por categoría
     const revenueAndAttendanceByCategory = array.reduce((result, event) => {
 
-        const { category, assistance, capacity, price, revenue = (assistance * price) } = event;
+        const { category, assistance, capacity, price, revenue = (assistance * price), } = event;
 
         // Inicializar el objeto de la categoría si aún no existe
         if (!result[category]) {
-
             result[category] = { assistance: 0, capacity: 0, revenue: 0, };
-            const revenue = (result[category].assistance * result[category].price);
         }
 
         // Agregar los ingresos y la asistencia del evento a la categoría correspondiente
@@ -203,12 +274,18 @@ function updateTable(array, row) {
         result[category].capacity += capacity;
         result[category].revenue += revenue;
 
-        console.log(result)
         return result;
 
     }, {});
+
+    // Calcular el porcentaje de asistencia combinado para cada categoría
+    Object.values(revenueAndAttendanceByCategory).forEach(categoryData => {
+        const attendancePercentage = ((categoryData.assistance) / (categoryData.capacity) * 100).toFixed(2);
+        categoryData.percentage = attendancePercentage;
+    });
+
+    // Actualizar la tabla con la información correspondiente
     const categories = Object.keys(revenueAndAttendanceByCategory);
-    console.log(categories);
     for (let i = row; i < row + categories.length; i++) {
         const categoryEvent = document.querySelector(`table tr:nth-child(${i}) td:nth-child(1)`);
         const revenueByCategory = document.querySelector(`table tr:nth-child(${i}) td:nth-child(2)`);
@@ -216,7 +293,7 @@ function updateTable(array, row) {
         const categoryItem = categories[i - row];
         const categoryData = revenueAndAttendanceByCategory[categoryItem];
         const revenue = categoryData.revenue;
-        const attendancePercentage = (categoryData.assistance / categoryData.capacity * 100).toFixed(2);
+        const attendancePercentage = categoryData.percentage;
         categoryEvent.textContent = categoryItem;
         revenueByCategory.textContent = `$${revenue.toFixed(0)}`;
         attendancePercentageByCategory.textContent = `${attendancePercentage}%`;

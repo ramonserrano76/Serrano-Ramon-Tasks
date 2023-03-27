@@ -14,9 +14,16 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
             const pastArray = convert_arrayPast(data, 'events');
             send_template_to_dom(pastArray, 'containerId');
             createCategories(pastArray);
-            const searchButton = document.querySelector('#searchButton');
-            searchButton.addEventListener('click', function (event) {
+            const searchInput = document.querySelector('#searchText');
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim(); // obtener el valor actual del campo de búsqueda
                 searchEvents(pastArray);
+            });
+            const categoryInput = document.querySelectorAll('input[type="checkbox"]');
+            categoryInput.forEach(categoryId => {
+                categoryId.addEventListener('change', function (event) {
+                    searchEvents(pastArray);
+                });
             });
         }
         catch (err) {
@@ -26,7 +33,6 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
         // Sobrescribe el archivo data.js con los nuevos datos
         // const blob = new blob([data], 'data.js', { type: 'text/javascript' });
         // saveAs(blob, 'data.js');
-
     }
 
     if (!data) {
@@ -38,10 +44,17 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
             const pastArray = convert_arrayPast(data, 'events');
             send_template_to_dom(pastArray, 'containerId');
             createCategories(pastArray);
-            const searchButton = document.querySelector('#searchButton');
-            searchButton.addEventListener('click', function (event) {
+            const searchInput = document.querySelector('#searchText');
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim(); // obtener el valor actual del campo de búsqueda
                 searchEvents(pastArray);
             });
+            const categoryInput = document.querySelectorAll('input[type="checkbox"]');
+            categoryInput.forEach(categoryId => {
+                categoryId.addEventListener('change', function (event) {
+                    searchEvents(pastArray);
+                });
+            });           
         } 
         catch (err) {
             console.error(`Error al cargar los datos del archivo js ${DATA_FILE_PATH}: ${err.message}`);
