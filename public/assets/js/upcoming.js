@@ -14,9 +14,16 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
             const upcomingArray = convert_arrayUpcoming(data, 'events');
             send_template_to_dom(upcomingArray, 'containerId');
             createCategories(upcomingArray);
-            const searchButton = document.querySelector('#searchButton');
-            searchButton.addEventListener('click', function (event) {
+            const searchInput = document.querySelector('#searchText');
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim(); // obtener el valor actual del campo de búsqueda
                 searchEvents(upcomingArray);
+            }); 
+            const categoryInput = document.querySelectorAll('input[type="checkbox"]');
+            categoryInput.forEach(categoryId => {
+                categoryId.addEventListener('change', function (event) {
+                    searchEvents(upcomingArray);
+                });
             });
         }
         catch (err) {
@@ -38,9 +45,16 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
             const upcomingArray = convert_arrayUpcoming(data, 'events');
             send_template_to_dom(upcomingArray, 'containerId');
             createCategories(upcomingArray);
-            const searchButton = document.querySelector('#searchButton');
-            searchButton.addEventListener('click', function (event) {
+            const searchInput = document.querySelector('#searchText');
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim(); // obtener el valor actual del campo de búsqueda
                 searchEvents(upcomingArray);
+            });
+            const categoryInput = document.querySelectorAll('input[type="checkbox"]');
+            categoryInput.forEach(categoryId => {
+                categoryId.addEventListener('change', function (event) {
+                    searchEvents(upcomingArray);
+                });
             });
         } 
         catch (err) {

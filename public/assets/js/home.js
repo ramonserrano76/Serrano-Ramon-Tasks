@@ -14,14 +14,20 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
             const new_array = convert_arrayAll(data, 'events');
             send_template_to_dom(new_array, 'containerId');
             createCategories(new_array);
-            const searchButton = document.querySelector('#searchButton');
-            searchButton.addEventListener('click', function (event) {
+            const searchInput = document.querySelector('#searchText');
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim(); // obtener el valor actual del campo de búsqueda
                 searchEvents(new_array);
             });
+            const categoryInput = document.querySelectorAll('input[type="checkbox"]');
+            categoryInput.forEach(categoryId => {
+                categoryId.addEventListener('change', function (event) {
+                    searchEvents(new_array);
+                });
+            });      
         }
         catch (err) {
             console.error(`Error al obtener los datos de la API: ${err.message}`);
-        
         }
 
         // Sobrescribe el archivo data.js con los nuevos datos
@@ -38,11 +44,18 @@ async function obtenerDatosDeEventos(forceUpdate = false) {
             const new_array = await convert_arrayAll(data, 'events');
             send_template_to_dom(new_array, 'containerId');
             createCategories(new_array);
-            const searchButton = document.querySelector('#searchButton');
-            searchButton.addEventListener('click', function (event) {
+            const searchInput = document.querySelector('#searchText');
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.trim(); // obtener el valor actual del campo de búsqueda
                 searchEvents(new_array);
             });
-        } 
+            const categoryInput = document.querySelectorAll('input[type="checkbox"]');
+            categoryInput.forEach(categoryId => {
+                categoryId.addEventListener('change', function (event) {
+                    searchEvents(new_array);
+                });
+            });      
+        }
         catch (err) {
             console.error(`Error al cargar los datos del archivo js ${DATA_FILE_PATH}: ${err.message}`);
             throw err;
