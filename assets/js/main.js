@@ -79,61 +79,6 @@ function send_template_to_dom(array, containerId) {
 // Construimos una funcion para enviar la seccion de checkbox de categorias y search input al DOM automaticamente,
 // colocandole los nombres de las categorias existentes en el array filtrado creado arriba.
 
-// function createCategories(categories) {
-//     const categoryContainer = document.querySelector('#categoryContainer');
-//     const categoryMap = {};
-
-//     categories.forEach((categories) => {
-//         if (!categoryMap[categories.category]) { // verificar si la categoría ya existe para que no se repitan
-//             const categoryLabel = document.createElement('label');
-//             categoryLabel.classList.add('form-check-label');
-//             categoryLabel.setAttribute('for', categories._id);
-//             categoryLabel.textContent = categories.category;
-
-//             const categoryInput = document.createElement('input');
-//             categoryInput.classList.add('form-check-input');
-//             categoryInput.setAttribute('type', 'checkbox');
-//             categoryInput.setAttribute('value', categories.category);
-//             categoryInput.setAttribute('id', categories._id);
-//             categoryInput.setAttribute('name', categories.category);
-//             const categoryDiv = document.createElement('div');
-//             categoryDiv.classList.add('form-check', 'me-3');
-//             categoryDiv.setAttribute('id', 'checkboxId');
-//             categoryDiv.appendChild(categoryInput);
-//             categoryDiv.appendChild(categoryLabel);
-
-//             categoryContainer.appendChild(categoryDiv);
-
-//             categoryMap[categories.category] = true; // agregar la categoría al mapa
-//         }
-//     });
-//     // Agregar el formulario de búsqueda después del ciclo forEach
-//     const searchForm = document.createElement('form');
-//     searchForm.classList.add('d-flex', 'me-3');
-//     searchForm.setAttribute('id', 'checkboxId');
-//     const searchInput = document.createElement('input');
-//     searchInput.classList.add('form-control', 'me-2');
-//     searchInput.setAttribute('type', 'search');
-//     searchInput.setAttribute('placeholder', 'Search');
-//     searchInput.setAttribute('aria-label', 'Search');
-//     searchInput.setAttribute('id', 'searchText');
-
-//     const searchButton = document.createElement('button');
-//     searchButton.classList.add('btn', 'btn-outline-dark');
-//     searchButton.setAttribute('type', 'submit');
-//     searchButton.setAttribute('id', 'searchButton');
-
-//     const searchIcon = document.createElement('i');
-//     searchIcon.classList.add('bi', 'bi-search');
-
-//     searchButton.appendChild(searchIcon);
-
-//     searchForm.appendChild(searchInput);
-//     searchForm.appendChild(searchButton);
-
-//     categoryContainer.appendChild(searchForm);
-// };
-
 function createCategories(categories, events) {
     const categoryContainer = document.querySelector('#categoryContainer');
     const categoryMap = {};
@@ -159,16 +104,7 @@ function createCategories(categories, events) {
             categoryDiv.appendChild(categoryInput);
             categoryDiv.appendChild(categoryLabel);
 
-            categoryContainer.appendChild(categoryDiv);
-
-            // agregar el manejador de eventos al checkbox
-            categoryInput.addEventListener('change', () => {
-                const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(category => category.value);
-
-                const filteredEvents = events.filter(event => selectedCategories.includes(event.category));
-
-                send_template_to_dom(filteredEvents, "containerId");
-            });
+            categoryContainer.appendChild(categoryDiv)
 
             categoryMap[category.category] = true;
         }
