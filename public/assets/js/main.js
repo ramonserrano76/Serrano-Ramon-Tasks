@@ -56,9 +56,11 @@ function send_template_to_dom(array, containerId) {
         <!-- Tarjeta ${item._id} -->
         <div class="col-md-6 col-lg-3 mb-4" id="${item._id}">
             <div class="card p-3 d-flex align-items-stretch">
-                <img class="card-img-top h-150 shadow w-100" src="${item.image}" style="height: 180px;">
+                <a href="./detail.html?id=${item._id}">
+                    <img class="card-img-top h-150 shadow w-100" src="${item.image}" style="height: 180px;">
+                </a>                
                 <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5>
+                    <a href="./detail.html?id=${item._id}" class="card-title h5 text-decoration-none">${item.name}</a>
                     <h6 class="card-subtitle d-none">Subtitulo de la tarjeta</h6>
                     <p class="card-text">${item.description}</p>
                     <p id="place-text" class="card-text d-none" >Event place: ${item.place}</p>
@@ -104,7 +106,7 @@ function createCategories(categories, events) {
             categoryDiv.appendChild(categoryInput);
             categoryDiv.appendChild(categoryLabel);
 
-            categoryContainer.appendChild(categoryDiv)            
+            categoryContainer.appendChild(categoryDiv)
 
             categoryMap[category.category] = true;
         }
