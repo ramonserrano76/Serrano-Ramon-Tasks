@@ -23,7 +23,7 @@ if (!forceUpdate) {
                 if (item) {
                     detailHtml.innerHTML = `
                         <div class="col-md-6 mb-4">
-                            <div class="card border rounded p-5">
+                            <div class="card border rounded p-2">
                                 <img class="card-img-top img-fluid shadow" src="${item.image}" 
                                     alt="Imagen">
                             </div>
@@ -85,7 +85,7 @@ if (!data) {
                 if (item) {
                     detailHtml.innerHTML = `
                         <div class="col-md-6 mb-4">
-                            <div class="card border rounded p-5">
+                            <div class="card border rounded p-2">
                                 <img class="card-img-top img-fluid shadow" src="${item.image}" 
                                     alt="Imagen">
                             </div>
